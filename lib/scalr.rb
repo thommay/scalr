@@ -6,6 +6,10 @@ class Scalr
     @client ||= Scalr::Client.new(opts[:url], opts[:key], opts[:secret])
   end
 
+  def environments_list
+    client.get('EnvironmentsList')
+  end
+
   def farm
     @farm ||= Scalr::API::Farm.new(client)
   end
