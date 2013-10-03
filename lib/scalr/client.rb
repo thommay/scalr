@@ -24,7 +24,7 @@ class Scalr
       end
     end
 
-    def get(action, params)
+    def get(action, params={})
       action(action, :get, params)
     end
 
@@ -48,8 +48,8 @@ class Scalr
                      KeyID: @key,
                      AuthVersion: 3
       }
-      params.merge!(additional)
-      client.send(mode, '/api/api.php', params)
+      p = params.merge(additional).delete_if { |k,v| v.nil? }
+      client.send(mode, '/api/api.php', p)
     end
 
   end
