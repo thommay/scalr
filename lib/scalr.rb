@@ -3,7 +3,7 @@ class Scalr
   attr_reader :client
 
   def initialize(opts = {})
-    @client ||= Scalr::Client.new(opts[:url], opts[:key], opts[:secret])
+    @client ||= Scalr::Client.new(opts[:url], opts[:key], opts[:secret], opts[:environment])
   end
 
   def environments_list

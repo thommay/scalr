@@ -6,12 +6,13 @@ require 'time'
 
 class Scalr
   class Client
-    attr_accessor :key, :secret, :url
+    attr_accessor :key, :secret, :url, :env
 
-    def initialize(url, key, secret)
+    def initialize(url, key, secret, env)
       @url = url
       @key = key
       @secret = secret
+      @env = env
     end
 
     def client
@@ -46,7 +47,8 @@ class Scalr
                      Version: '2.3.0',
                      TimeStamp: time,
                      KeyID: @key,
-                     AuthVersion: 3
+                     AuthVersion: 3,
+                     EnvID: @env
       }
       p = params.merge(additional).delete_if { |k,v| v.nil? }
       client.send(mode, '/api/api.php', p)
