@@ -23,8 +23,16 @@ class Scalr
     @role ||= Scalr::API::Role.new(client)
   end
   def_delegator :role, :list, :roles_list
+  def_delegator :role, :clone, :server_image_create
+
+  def server
+    @server ||= Scalr::API::Server.new(client)
+  end
+  def_delegator :server, :info, :get_server_information
+
   require_relative 'scalr/client'
   require_relative 'scalr/api/base'
   require_relative 'scalr/api/farm'
   require_relative 'scalr/api/role'
+  require_relative 'scalr/api/server'
 end
