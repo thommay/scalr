@@ -13,6 +13,10 @@ class Scalr
         client.get('FarmLaunch', FarmID: farm)
       end
 
+      def terminate(farm, ebs=1, eip=1, dns=0)
+        client.get('FarmTerminate', FarmID: farm, KeepEBS: ebs, KeepEIP: eip, KeepDNSZone: dns)
+      end
+
       def clone(farm)
         client.get('FarmClone', FarmID: farm)
       end

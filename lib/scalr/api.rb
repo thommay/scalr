@@ -19,6 +19,7 @@ class Scalr
     def_delegator :farm, :stats, :farm_stats
     def_delegator :farm, :launch, :farm_launch
     def_delegator :farm, :clone, :farm_clone
+    def_delegator :farm, :terminate, :farm_terminate
 
     def role
       @role ||= Role.new(client)
