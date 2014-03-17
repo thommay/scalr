@@ -1,12 +1,13 @@
 class Scalr
   class API
     class Role < Base
-      def list(params={})
-        client.get('RolesList', params)
+      def list(params = {})
+        client.get('RolesList', params)['RolesListResponse']
       end
 
       def clone(server, name)
-        client.get('ServerImageCreate', ServerID: server, RoleName: name)
+        client.get('ServerImageCreate', ServerID: server,
+                                        RoleName: name)['ServerImageCreateResponse']
       end
     end
   end
