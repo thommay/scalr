@@ -5,4 +5,4 @@ gem "faraday"
 gem "faraday_middleware"
 gem 'awesome_print'
 gem "multi_xml"
-# gem "rails"
+gem "rubocop"
