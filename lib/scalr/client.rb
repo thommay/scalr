@@ -5,12 +5,11 @@ require 'base64'
 require 'time'
 
 class Scalr
-
   class ResponseError < Faraday::Error::ClientError
     attr_reader :response
 
     def initialize(response)
-      super response["Error"]["Message"]
+      super response['Error']['Message']
     end
   end
 
@@ -20,9 +19,7 @@ class Scalr
     def call(env)
       @app.call(env).on_complete do |e|
         body = ::MultiXml.parse(e[:body])
-        if body["Error"]
-          raise Scalr::ResponseError, body
-        end
+        fail(Scalr::ResponseError, body) if body['Error']
       end
     end
   end
@@ -68,12 +65,9 @@ class Scalr
     def action(action, mode = :get, params = {})
       time = timestamp
       additional = { Signature: sig(action, time),
-                     Action: action,
-                     Version: '2.3.0',
-                     TimeStamp: time,
-                     KeyID: @key,
-                     AuthVersion: 3,
-                     EnvID: @env
+                     Action: action, Version: '2.3.0',
+                     TimeStamp: time, KeyID: @key,
+                     AuthVersion: 3, EnvID: @env
       }
       p = params.merge(additional).delete_if { |k, v| v.nil? }
       client.send(mode, '/api/api.php', p)
