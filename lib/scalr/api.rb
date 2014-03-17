@@ -4,7 +4,8 @@ class Scalr
     attr_reader :client
 
     def initialize(opts = {})
-      @client ||= Scalr::Client.new(opts[:url], opts[:key], opts[:secret], opts[:environment])
+      @client ||= Scalr::Client.new(opts[:url], opts[:key],
+                                    opts[:secret], opts[:environment])
     end
 
     def environments_list
@@ -30,7 +31,10 @@ class Scalr
     def server
       @server ||= Server.new(client)
     end
-    def_delegator :server, :info, :get_server_information
+    def_delegator :server, :info, :server_information
+    def_delegator :server, :launch, :server_launch
+    def_delegator :server, :terminate, :server_terminate
+    def_delegator :server, :reboot, :server_reboot
 
     require_relative 'api/base'
     require_relative 'api/farm'
