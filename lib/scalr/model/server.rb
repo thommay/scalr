@@ -46,6 +46,7 @@ class Scalr
         @index = @server['ServerInfo']['Index']
       end
 
+      # rubocop:disable CyclomaticComplexity, MethodLength
       def get_status(status)
         case status
         when 'Pending launch'
