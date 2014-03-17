@@ -1,0 +1,8 @@
+Documentation:
+  Enabled: false
+
+DoubleNegation:
+  Enabled: false
+
+AlignHash:
+  Enabled: false
