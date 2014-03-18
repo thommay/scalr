@@ -1,8 +1,5 @@
-# A sample Gemfile
 source "https://rubygems.org"
 
-gem "faraday"
-gem "faraday_middleware"
-gem 'awesome_print'
-gem "multi_xml"
-gem "rubocop"
+gem "terminal-notifier-guard", require: RUBY_PLATFORM.include?('darwin') && "terminal-notifier-guard"
+
+gemspec
