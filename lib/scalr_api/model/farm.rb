@@ -1,7 +1,7 @@
 class ScalrApi
   class Model
     class Farm
-      attr_reader :id, :name, :roles
+      attr_reader :id, :name, :roles, :farm
 
       def initialize(farm)
         @farm = farm

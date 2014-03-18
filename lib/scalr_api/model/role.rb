@@ -2,6 +2,7 @@ class ScalrApi
   class Model
     class Role
       attr_reader :id, :role_id, :name, :platform, :category, :servers
+      attr_reader :role
 
       def initialize(role)
         @role = role
