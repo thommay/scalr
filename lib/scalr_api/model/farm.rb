@@ -16,6 +16,10 @@ class ScalrApi
         "<#{self.class.name} #{id} #{name} #{roles.length} roles>"
       end
 
+      def terminate
+        ScalrApi.calls.farm_terminate(id)
+      end
+
       def self.find(id)
         farm = ScalrApi.calls.farm_details(id)
         new(farm)
