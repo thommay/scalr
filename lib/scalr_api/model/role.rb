@@ -20,6 +20,7 @@ class ScalrApi
         @name = @role['Name']
         @platform = @role['Platform']
         @category = @role['Category']
+        return unless @role['ServerSet']
         if @role['ServerSet']['Item'].is_a? Array
           @servers = @role['ServerSet']['Item'].map { |s| s['ServerID'] }
         else
