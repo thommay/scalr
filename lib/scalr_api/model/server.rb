@@ -1,6 +1,6 @@
 require 'date'
 
-class Scalr
+class ScalrApi
   class Model
     class Server
       attr_reader :server
@@ -17,21 +17,21 @@ class Scalr
       end
 
       def reboot
-        Scalr.api.server_reboot(id)
+        ScalrApi.calls.server_reboot(id)
       end
 
       def terminate(decrease = true)
-        Scalr.api.server_terminate(id, decrease)
+        ScalrApi.calls.server_terminate(id, decrease)
       end
 
       def self.find(id)
-        server = Scalr.api.server_information(id)
+        server = ScalrApi.calls.server_information(id)
         new(server)
       end
 
       def self.create(role)
-        id = Scalr.api.server_launch(role)
-        new(Scalr.api.server_information(id))
+        id = ScalrApi.calls.server_launch(role)
+        new(ScalrApi.calls.server_information(id))
       end
 
       private

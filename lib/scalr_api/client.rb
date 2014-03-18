@@ -4,7 +4,7 @@ require 'openssl'
 require 'base64'
 require 'time'
 
-class Scalr
+class ScalrApi
   class ResponseError < Faraday::Error::ClientError
     attr_reader :response
 

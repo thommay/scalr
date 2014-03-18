@@ -1,4 +1,4 @@
-class Scalr
+class ScalrApi
   class Model
     class Role
       attr_reader :id, :role_id, :name, :platform, :category, :servers

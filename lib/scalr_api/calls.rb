@@ -1,5 +1,5 @@
-class Scalr
-  class API
+class ScalrApi
+  class Calls
     extend Forwardable
     attr_reader :client
 
@@ -36,9 +36,9 @@ class Scalr
     def_delegator :server, :terminate, :server_terminate
     def_delegator :server, :reboot, :server_reboot
 
-    require_relative 'api/base'
-    require_relative 'api/farm'
-    require_relative 'api/role'
-    require_relative 'api/server'
+    require_relative 'calls/base'
+    require_relative 'calls/farm'
+    require_relative 'calls/role'
+    require_relative 'calls/server'
   end
 end

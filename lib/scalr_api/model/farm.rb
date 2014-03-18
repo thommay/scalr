@@ -1,4 +1,4 @@
-class Scalr
+class ScalrApi
   class Model
     class Farm
       attr_reader :id, :name, :roles
@@ -17,13 +17,13 @@ class Scalr
       end
 
       def self.find(id)
-        farm = Scalr.api.farm_details(id)
+        farm = ScalrApi.calls.farm_details(id)
         new(farm)
       end
 
       def self.all
-        Scalr.api.farms_list['FarmSet']['Item'].reduce([]) do |acc, x|
-          acc << new(Scalr.api.farm_details(x['ID']))
+        ScalrApi.calls.farms_list['FarmSet']['Item'].reduce([]) do |acc, x|
+          acc << new(ScalrApi.calls.farm_details(x['ID']))
         end
       end
 
@@ -39,10 +39,10 @@ class Scalr
       def parse_roles(roles)
         if roles.is_a? Array
           roles.reduce([]) do |acc, r|
-            acc << Scalr::Model::Role.new(r)
+            acc << ScalrApi::Model::Role.new(r)
           end
         else
-          [Scalr::Model::Role.new(roles)]
+          [ScalrApi::Model::Role.new(roles)]
         end
       end
     end
