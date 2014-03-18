@@ -19,7 +19,7 @@ class ScalrApi
     def call(env)
       @app.call(env).on_complete do |e|
         body = ::MultiXml.parse(e[:body])
-        fail(Scalr::ResponseError, body) if body['Error']
+        fail(ScalrApi::ResponseError, body) if body['Error']
       end
     end
   end
@@ -40,7 +40,7 @@ class ScalrApi
         f.request   :url_encoded
         f.response  :xml, content_type: /\bxml$/
         f.response  :logger
-        f.use       Scalr::APIError
+        f.use       ScalrApi::APIError
         f.adapter   Faraday.default_adapter
       end
     end
