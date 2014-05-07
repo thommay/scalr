@@ -25,21 +25,11 @@ class ScalrApi
   end
 
   class Client
-    attr_accessor :key, :secret, :url, :env
-
-    def initialize(url, key, secret, env)
-      @url = url
-      @key = key
-      @secret = secret
-      @env = env
-    end
-
     def client
-      @client ||= Faraday.new(url: @url,
+      @client ||= Faraday.new(url: ScalrApi.configuration.url,
                               ssl: { verify: false, version: 'SSLv3' }) do |f|
         f.request   :url_encoded
         f.response  :xml, content_type: /\bxml$/
-        f.response  :logger
         f.use       ScalrApi::APIError
         f.adapter   Faraday.default_adapter
       end
@@ -49,16 +39,14 @@ class ScalrApi
       action(action, :get, params).body
     end
 
-    private
-
     def timestamp
       Time.now.getgm.iso8601
     end
 
     def sig(action, timestamp)
-      string = "#{action}:#{@key}:#{timestamp}"
-      mac = OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha256'),
-                                 @secret, string)
+      string = "#{action}:#{ScalrApi.configuration.key}:#{timestamp}"
+      mac = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'),
+                                 ScalrApi.configuration.secret, string)
       Base64.strict_encode64(mac)
     end
 
@@ -66,9 +54,12 @@ class ScalrApi
       time = timestamp
       additional = { Signature: sig(action, time),
                      Action: action, Version: '2.3.0',
-                     TimeStamp: time, KeyID: @key,
-                     AuthVersion: 3, EnvID: @env
+                     TimeStamp: time, KeyID: ScalrApi.configuration.key,
+                     AuthVersion: 3
       }
+
+      additional[:EnvID] = ScalrApi.configuration.environment if ScalrApi.configuration.environment
+
       p = params.merge(additional).delete_if { |k, v| v.nil? }
       client.send(mode, '/api/api.php', p)
     end

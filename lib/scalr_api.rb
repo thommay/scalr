@@ -2,18 +2,24 @@ require 'scalr_api/client'
 require 'scalr_api/calls'
 
 class ScalrApi
-  def self.setup(opts = {})
-    @url = opts[:url]
-    @key = opts[:key]
-    @secret = opts[:secret]
-    @env = opts[:environment]
-    @api ||= ScalrApi::Calls.new(url: @url, key: @key, secret: @secret,
-                            environment: @env)
+  class << self
+    attr_accessor :configuration
   end
 
-  def self.api
-    @api ||= ScalrApi::Calls.new(url: @url, key: @key, secret: @secret,
-                            environment: @env)
+  def self.configure
+    self.configuration ||= Configuration.new
+    yield(configuration)
+  end
+
+  def self.calls
+    @calls ||= ScalrApi::Calls.new
+  end
+
+  class Configuration
+    attr_accessor :url
+    attr_accessor :key
+    attr_accessor :secret
+    attr_accessor :environment
   end
 
   require 'scalr_api/model/farm'
