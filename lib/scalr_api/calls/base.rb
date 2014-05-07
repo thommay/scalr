@@ -1,5 +1,5 @@
-class Scalr
-  class API
+class ScalrApi
+  class Calls
     class Base
       attr_accessor :client
       def initialize(client)

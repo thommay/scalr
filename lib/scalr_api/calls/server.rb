@@ -1,5 +1,5 @@
-class Scalr
-  class API
+class ScalrApi
+  class Calls
     class Server < Base
       def info(id)
         client.get('ServerGetExtendedInformation',

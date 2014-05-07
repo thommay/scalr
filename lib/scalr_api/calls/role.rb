@@ -1,5 +1,5 @@
-class Scalr
-  class API
+class ScalrApi
+  class Calls
     class Role < Base
       def list(params = {})
         client.get('RolesList', params)['RolesListResponse']

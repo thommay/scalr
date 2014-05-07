@@ -1,5 +1,5 @@
-class Scalr
-  class API
+class ScalrApi
+  class Calls
     class Farm < Base
       def list
         client.get('FarmsList')['FarmsListResponse']
