@@ -15,6 +15,7 @@ class ScalrApi
 
       private
 
+      # rubocop:disable CyclomaticComplexity, MethodLength
       def parse_role
         @id = @role['ID']
         @role_id = @role['RoleID']
