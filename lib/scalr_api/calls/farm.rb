@@ -13,10 +13,10 @@ class ScalrApi
         client.get('FarmLaunch', FarmID: farm)['FarmLaunchResponse']
       end
 
-      def terminate(farm, ebs = 1, eip = 1, dns = 0)
+      def terminate(farm, ebs = true, eip = true, dns = false)
         client.get('FarmTerminate', FarmID: farm, KeepEBS: ebs,
-                                    KeepEIP: eip,
-                                    KeepDNSZone: dns)['FarmTerminateResponse']
+                                    KeepEIP: eip, KeepDNSZone: dns)
+        ['FarmTerminateResponse']
       end
 
       def clone(farm)

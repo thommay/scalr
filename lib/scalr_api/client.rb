@@ -43,6 +43,24 @@ class ScalrApi
       Time.now.getgm.iso8601
     end
 
+    def sanitize_params(p)
+      p.keys.inject({}) do |acc, k|
+        key = k.to_s
+        if p[k].kind_of? Hash
+          p[k].each_pair { |n,v| acc["#{key}[#{n}]"] = v }
+        else
+          if p.fetch(k) == true
+            acc[key] = 1
+          elsif p.fetch(k) == false
+            acc[key] = 0
+          else
+            acc[key] = p[k]
+          end
+        end
+        acc
+      end
+    end
+
     def sig(action, timestamp)
       string = "#{action}:#{ScalrApi.configuration.key}:#{timestamp}"
       mac = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'),
@@ -61,7 +79,7 @@ class ScalrApi
       additional[:EnvID] = ScalrApi.configuration.environment if ScalrApi.configuration.environment
 
       p = params.merge(additional).delete_if { |k, v| v.nil? }
-      client.send(mode, '/api/api.php', p)
+      client.send(mode, '/api/api.php', sanitize_params(p))
     end
   end
 end
