@@ -58,7 +58,7 @@ class ScalrApi
           end
         end
         acc
-      end
+      end.delete_if { |k, v| v.nil? }
     end
 
     def sig(action, timestamp)
@@ -78,7 +78,7 @@ class ScalrApi
 
       additional[:EnvID] = ScalrApi.configuration.environment if ScalrApi.configuration.environment
 
-      p = params.merge(additional).delete_if { |k, v| v.nil? }
+      p = params.merge(additional)
       client.send(mode, '/api/api.php', sanitize_params(p))
     end
   end
