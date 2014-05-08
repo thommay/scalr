@@ -35,6 +35,13 @@ class ScalrApi
     def_delegator :server, :terminate, :server_terminate
     def_delegator :server, :reboot, :server_reboot
 
+    def orchestration
+      @orchestration ||= Orchestration.new(client)
+    end
+    def_delegator :orchestration, :scripts_list, :scripts_list
+    def_delegator :orchestration, :script_details, :script_get_details
+    def_delegator :orchestration, :script_execute, :script_execute
+
     require_relative 'calls/base'
     require_relative 'calls/farm'
     require_relative 'calls/role'
